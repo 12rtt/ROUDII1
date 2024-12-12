@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Photo Gallery</title>
+    <style>
+        #image {
+            width: 300px;
+            height: 200px;
+            border: 1px solid black;
+            text-align: center;
+            line-height: 200px;
+            background-color: #f0f0f0;
+            background-size: cover;
+            background-position: center;
+        }
+        .preview {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body onload="addTabFocus()">
+    <h1>Photo Gallery</h1>
+    <h2>Hover or focus on an image to see the details</h2>
+    <div id="image">Hover over an image below to display here</div>
+    <br> <img class="preview" src="image1.jpg" alt="Description of image 1" width="100" height="100">
+    <img class="preview" src="image2.jpg" alt="Description of image 2" width="100" height="100">
+    <img class="preview" src="image3.jpg" alt="Description of image 3" width="100" height="100">
+    <img class="preview" src="image4.jpg" alt="Description of image 4" width="100" height="100">
+    <img class="preview" src="image5.jpg" alt="Description of image 5" width="100" height="100">
+    <img class="preview" src="image6.jpg" alt="Description of image 6" width="100" height="100">
+
+    <script>
+        // Function to update the preview area
+        function upDate(previewPic) {
+            console.log("onmouseover or onfocus event triggered");
+            console.log("Source:", previewPic.src); // Log the source
+            console.log("Alt:", previewPic.alt); // Log the alt text
+
+            const imageDiv = document.getElementById("image");
+            imageDiv.style.backgroundImage = `url('${previewPic.src}')`;
+            imageDiv.innerHTML = previewPic.alt;
+        }
+
+        // Function to reset the preview area
+        function unDo() {
+            console.log("onmouseout or onblur event triggered");
+            const imageDiv = document.getElementById("image");
+            imageDiv.style.backgroundImage = "";
+            imageDiv.innerHTML = "Hover over an image below to display here";
+}
+
+        // Function to add tabindex and focus/blur events
+        function addTabFocus() {
+            console.log("onload event triggered");
+            const previews = document.querySelectorAll(".preview");
+            for (let i = 0; i < previews.length; i++) {
+                previews[i].setAttribute("tabindex", "0");
+                previews[i].addEventListener("focus", () => upDate(previews[i]));
+                previews[i].addEventListener("blur", unDo);
+                previews[i].addEventListener("mouseover", () => upDate(previews[i]));
+                previews[i].addEventListener("mouseout", unDo);
+            }
+        }
+    </script>
+</body>
+</html>
